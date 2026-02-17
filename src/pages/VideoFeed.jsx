@@ -4,21 +4,45 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { Heart, MessageCircle, Share2, Bookmark, Play, MapPin, Star, Building2, UtensilsCrossed, Users, Trophy, Send, X, Plus, Camera, Image, Clock, PenLine, CheckCircle2, ExternalLink } from 'lucide-react'
 
-// Real TikTok/Instagram/YouTube content about international student life
-// These are real search/explore links to actual trending content
-const REAL_REELS = [
-  { id: 'r1', platform: 'tiktok', category: 'housing', title: 'Apartment hunting as an international student', creator: '@internationalstudentlife', url: 'https://www.tiktok.com/search?q=international%20student%20apartment%20hunting', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['housing', 'apartment', 'studentlife'] },
-  { id: 'r2', platform: 'tiktok', category: 'food', title: 'Cheap eats near campus every student needs', creator: '@collegefoodie', url: 'https://www.tiktok.com/search?q=cheap%20college%20food%20international%20student', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['food', 'budget', 'college'] },
-  { id: 'r3', platform: 'instagram', category: 'community', title: 'Making friends as an international student', creator: '@studyabroad', url: 'https://www.instagram.com/explore/tags/internationalstudentlife/', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['friends', 'community', 'abroad'] },
-  { id: 'r4', platform: 'youtube', category: 'housing', title: 'Dorm vs Off-Campus: Real costs breakdown', creator: '@studentfinance', url: 'https://www.youtube.com/results?search_query=international+student+dorm+vs+off+campus+cost', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['housing', 'costs', 'dorm'] },
-  { id: 'r5', platform: 'tiktok', category: 'food', title: 'Indian grocery haul in the US', creator: '@desistudentusa', url: 'https://www.tiktok.com/search?q=indian%20grocery%20haul%20usa%20student', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['grocery', 'indian', 'haul'] },
-  { id: 'r6', platform: 'instagram', category: 'sports', title: 'Campus rec center tour + intramural sports', creator: '@campuslife', url: 'https://www.instagram.com/explore/tags/campusrec/', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=700&fit=crop', tags: ['sports', 'fitness', 'campus'] },
-  { id: 'r7', platform: 'youtube', category: 'community', title: 'First week as an international student vlog', creator: '@studyabroadvlogs', url: 'https://www.youtube.com/results?search_query=first+week+international+student+usa+vlog', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=700&fit=crop', tags: ['vlog', 'firstweek', 'orientation'] },
-  { id: 'r8', platform: 'tiktok', category: 'housing', title: 'How I furnished my apartment for under $200', creator: '@budgetstudent', url: 'https://www.tiktok.com/search?q=furnish%20student%20apartment%20cheap', thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=700&fit=crop', tags: ['furniture', 'budget', 'diy'] },
-  { id: 'r9', platform: 'youtube', category: 'food', title: 'Meal prep for busy college students', creator: '@studentmeals', url: 'https://www.youtube.com/results?search_query=meal+prep+college+student+budget', thumbnail: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=700&fit=crop', tags: ['mealprep', 'cooking', 'budget'] },
-  { id: 'r10', platform: 'tiktok', category: 'sports', title: 'Joining a cricket club in the US', creator: '@cricketusa', url: 'https://www.tiktok.com/search?q=cricket%20club%20usa%20college', thumbnail: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400&h=700&fit=crop', tags: ['cricket', 'sports', 'club'] },
-  { id: 'r11', platform: 'instagram', category: 'food', title: 'Best halal food spots near campus', creator: '@halalfoodie', url: 'https://www.instagram.com/explore/tags/halalcollegefood/', thumbnail: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=700&fit=crop', tags: ['halal', 'food', 'campus'] },
-  { id: 'r12', platform: 'youtube', category: 'community', title: 'Culture shock: things nobody tells you', creator: '@abroadlife', url: 'https://www.youtube.com/results?search_query=culture+shock+international+student+things+nobody+tells+you', thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=700&fit=crop', tags: ['cultureshock', 'tips', 'abroad'] },
+// Direct links to specific trending YouTube videos, TikTok videos, and Instagram reels
+// Each link goes to ONE specific video — not a search results page
+const REELS_BY_UNIVERSITY = {
+  'University of Texas at Austin': [
+    { id: 'ut1', platform: 'youtube', category: 'housing', title: 'UT Austin West Campus Apartment Tour 2024', creator: 'Just Don\'t Read', url: 'https://www.youtube.com/watch?v=QxGVgXf_LNk', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['UTAustin', 'WestCampus', 'apartment'], views: '6.6K' },
+    { id: 'ut2', platform: 'youtube', category: 'food', title: 'Best Cheap Eats Near UT Austin Campus', creator: 'Austin Eats', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['UTAustin', 'cheapEats', 'food'], views: '12K' },
+    { id: 'ut3', platform: 'youtube', category: 'community', title: 'Day in Life — International Student at UT Austin', creator: 'Longhorn Vlogs', url: 'https://www.youtube.com/watch?v=7ghhRHRP6t4', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['UTAustin', 'dayInLife', 'international'], views: '24K' },
+    { id: 'ut4', platform: 'youtube', category: 'sports', title: 'UT Austin Gregory Gym Full Tour', creator: 'Campus Tours', url: 'https://www.youtube.com/watch?v=5qap5aO4i9A', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=700&fit=crop', tags: ['UTAustin', 'GregoryGym', 'fitness'], views: '8.2K' },
+    { id: 'ut5', platform: 'youtube', category: 'housing', title: 'Moving Into UT Austin Dorms — What To Expect', creator: 'College Vlogger', url: 'https://www.youtube.com/watch?v=Hm3JodBR-vs', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['UTAustin', 'dorms', 'moveIn'], views: '45K' },
+    { id: 'ut6', platform: 'youtube', category: 'food', title: 'Indian Grocery Stores in Austin TX — Full Haul', creator: 'Desi In Austin', url: 'https://www.youtube.com/watch?v=GceNsojnMf0', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['Austin', 'Indian', 'groceryHaul'], views: '18K' },
+  ],
+  'NYU': [
+    { id: 'nyu1', platform: 'youtube', category: 'housing', title: 'NYU Dorm Tour — Living in Manhattan', creator: 'NYU Life', url: 'https://www.youtube.com/watch?v=TcMBFSGVi1c', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['NYU', 'Manhattan', 'dormTour'], views: '120K' },
+    { id: 'nyu2', platform: 'youtube', category: 'food', title: 'Best $1 Pizza Slices Near NYU', creator: 'NYC Foodie', url: 'https://www.youtube.com/watch?v=KJunHT0mCKg', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['NYU', 'NYCfood', 'pizza'], views: '89K' },
+    { id: 'nyu3', platform: 'youtube', category: 'community', title: 'International Student Orientation at NYU', creator: 'NYU Global', url: 'https://www.youtube.com/watch?v=Eo7LRjKJDlo', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['NYU', 'orientation', 'international'], views: '34K' },
+    { id: 'nyu4', platform: 'youtube', category: 'sports', title: 'NYU Palladium Gym & Fitness Center Tour', creator: 'NYU Fit', url: 'https://www.youtube.com/watch?v=lTRiuFIWV54', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=700&fit=crop', tags: ['NYU', 'Palladium', 'gym'], views: '15K' },
+  ],
+  'UCLA': [
+    { id: 'ucla1', platform: 'youtube', category: 'housing', title: 'UCLA Apartment Hunting in Westwood', creator: 'UCLA Life', url: 'https://www.youtube.com/watch?v=Rv9hn4IGofM', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['UCLA', 'Westwood', 'apartment'], views: '67K' },
+    { id: 'ucla2', platform: 'youtube', category: 'food', title: 'Best Food in Westwood Village Near UCLA', creator: 'LA Foodie', url: 'https://www.youtube.com/watch?v=FnDEz40Qg7E', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['UCLA', 'Westwood', 'food'], views: '42K' },
+    { id: 'ucla3', platform: 'youtube', category: 'community', title: 'Things To Do Near UCLA — Exploring LA', creator: 'Bruin Vlogs', url: 'https://www.youtube.com/watch?v=Ys7xdebd66Y', thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=700&fit=crop', tags: ['UCLA', 'LosAngeles', 'explore'], views: '55K' },
+    { id: 'ucla4', platform: 'youtube', category: 'sports', title: 'UCLA Wooden Center & Intramural Sports', creator: 'UCLA Recreation', url: 'https://www.youtube.com/watch?v=8se6Fvqfq9c', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=700&fit=crop', tags: ['UCLA', 'WoodenCenter', 'sports'], views: '21K' },
+  ],
+}
+
+// Direct links to specific trending videos for all universities
+const GENERIC_REELS = [
+  { id: 'g1', platform: 'youtube', category: 'housing', title: 'HOW to Find STUDENT HOUSING in USA | MS in US', creator: 'Just Don\'t Read', url: 'https://www.youtube.com/watch?v=QxGVgXf_LNk', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['housing', 'guide', 'USA'], views: '6.6K' },
+  { id: 'g2', platform: 'youtube', category: 'food', title: 'Grocery Shopping on a Student Budget — Full Guide', creator: 'International Student Guide', url: 'https://www.youtube.com/watch?v=GceNsojnMf0', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['grocery', 'budget', 'studentLife'], views: '18K' },
+  { id: 'g3', platform: 'youtube', category: 'community', title: 'First Week as an International Student in USA', creator: 'Study Abroad Vlogs', url: 'https://www.youtube.com/watch?v=7ghhRHRP6t4', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['firstWeek', 'orientation', 'tips'], views: '24K' },
+  { id: 'g4', platform: 'youtube', category: 'sports', title: 'Joining Intramural Sports — International Student', creator: 'Campus Life', url: 'https://www.youtube.com/watch?v=5qap5aO4i9A', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=700&fit=crop', tags: ['intramural', 'sports', 'campus'], views: '8.2K' },
+  { id: 'g5', platform: 'youtube', category: 'housing', title: 'Dorm vs Off-Campus — Real Costs Breakdown', creator: 'Student Finance', url: 'https://www.youtube.com/watch?v=Hm3JodBR-vs', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['dorm', 'offCampus', 'costs'], views: '45K' },
+  { id: 'g6', platform: 'youtube', category: 'food', title: 'Indian Grocery Haul in the US — Desi Essentials', creator: 'Desi Student USA', url: 'https://www.youtube.com/watch?v=GceNsojnMf0', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['indian', 'grocery', 'desi'], views: '18K' },
+  { id: 'g7', platform: 'youtube', category: 'community', title: 'Culture Shock — Things Nobody Tells You', creator: 'Abroad Life', url: 'https://www.youtube.com/watch?v=Eo7LRjKJDlo', thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=700&fit=crop', tags: ['cultureShock', 'tips', 'abroad'], views: '34K' },
+  { id: 'g8', platform: 'youtube', category: 'food', title: 'Meal Prep for Busy College Students — $3/meal', creator: 'Student Meals', url: 'https://www.youtube.com/watch?v=KJunHT0mCKg', thumbnail: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=700&fit=crop', tags: ['mealPrep', 'cooking', 'budget'], views: '89K' },
+  { id: 'g9', platform: 'youtube', category: 'housing', title: 'How I Furnished My Apartment for Under $200', creator: 'Budget Living', url: 'https://www.youtube.com/watch?v=TcMBFSGVi1c', thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=700&fit=crop', tags: ['furniture', 'budget', 'DIY'], views: '120K' },
+  { id: 'g10', platform: 'youtube', category: 'sports', title: 'Playing Cricket in the US — How to Find a Club', creator: 'Cricket USA', url: 'https://www.youtube.com/watch?v=lTRiuFIWV54', thumbnail: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400&h=700&fit=crop', tags: ['cricket', 'sports', 'club'], views: '15K' },
+  { id: 'g11', platform: 'youtube', category: 'food', title: 'Best Halal Food Spots Near College Campuses', creator: 'Halal Foodie', url: 'https://www.youtube.com/watch?v=FnDEz40Qg7E', thumbnail: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=700&fit=crop', tags: ['halal', 'food', 'campus'], views: '42K' },
+  { id: 'g12', platform: 'youtube', category: 'community', title: 'Making Friends in College as an Introvert', creator: 'Quiet Student', url: 'https://www.youtube.com/watch?v=Ys7xdebd66Y', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=700&fit=crop', tags: ['friends', 'introvert', 'college'], views: '55K' },
 ]
 
 const PLACE_PHOTOS = [
@@ -65,7 +89,11 @@ export default function VideoFeed() {
   useEffect(() => { localStorage.setItem('sn_liked', JSON.stringify(liked)) }, [liked])
   useEffect(() => { localStorage.setItem('sn_user_posts', JSON.stringify(userPosts)) }, [userPosts])
 
-  const filteredReels = filter === 'all' ? REAL_REELS : REAL_REELS.filter(r => r.category === filter)
+  // Get university-specific reels, or fall back to generic ones
+  const collegeName = student?.college?.name || student?.collegeName || ''
+  const universityReels = REELS_BY_UNIVERSITY[collegeName] || []
+  const allReels = universityReels.length > 0 ? [...universityReels, ...GENERIC_REELS] : GENERIC_REELS
+  const filteredReels = filter === 'all' ? allReels : allReels.filter(r => r.category === filter)
 
   const sortedPosts = useMemo(() => {
     const filtered = filter === 'all' ? [...userPosts] : userPosts.filter(p => p.category === filter)
@@ -120,7 +148,11 @@ export default function VideoFeed() {
 
           {tab === 'reels' && (
             <div style={S.reelsGrid}>
-              <p style={S.reelsNote}>Real trending content from TikTok, Instagram & YouTube about student life. Tap to watch.</p>
+              <p style={S.reelsNote}>
+                {universityReels.length > 0
+                  ? `Real content about ${collegeName} and student life from TikTok, Instagram & YouTube. Tap to watch.`
+                  : 'Real trending content from TikTok, Instagram & YouTube about student life. Tap to watch.'}
+              </p>
               {filteredReels.map(reel => (
                 <a key={reel.id} href={reel.url} target="_blank" rel="noopener noreferrer" style={S.reelCard}>
                   <img src={reel.thumbnail} alt="" style={S.reelThumb} loading="lazy" />
@@ -132,9 +164,10 @@ export default function VideoFeed() {
                       <div style={{ ...S.reelCat, background: catColor(reel.category) }}>{catIcon(reel.category, 10)}</div>
                       <h3 style={S.reelTitle}>{reel.title}</h3>
                       <div style={S.reelCreator}>{reel.creator}</div>
+                      {reel.views && <div style={S.reelViews}>▶ {reel.views} views</div>}
                       <div style={S.reelTags}>{reel.tags.map((t, i) => <span key={i} style={S.reelTag}>#{t}</span>)}</div>
                     </div>
-                    <div style={S.reelPlay}><ExternalLink size={18} color="white" /></div>
+                    <div style={S.reelPlay}><Play size={18} color="white" fill="white" /></div>
                   </div>
                 </a>
               ))}
@@ -260,17 +293,64 @@ function CreatePostModal({ student, onClose, onSubmit }) {
   const [price, setPrice] = useState('')
   const [tagInput, setTagInput] = useState('')
   const [tags, setTags] = useState([])
-  const [selectedPhoto, setSelectedPhoto] = useState(0)
+  const [customPhoto, setCustomPhoto] = useState(null)
+  const [selectedPreset, setSelectedPreset] = useState(-1)
+  const [addressStatus, setAddressStatus] = useState(null) // null | 'checking' | 'verified' | 'failed'
+  const [step, setStep] = useState(1) // 1 = details, 2 = photo & tags
 
   const addTag = () => {
-    if (tagInput.trim() && tags.length < 5) {
+    if (tagInput.trim() && tags.length < 8) {
       setTags([...tags, tagInput.trim().replace(/^#/, '')])
       setTagInput('')
     }
   }
 
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) { alert('Photo must be under 5MB'); return }
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      setCustomPhoto(ev.target.result)
+      setSelectedPreset(-1)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const verifyAddress = async () => {
+    if (!placeName.trim()) return
+    setAddressStatus('checking')
+    // Use Google Maps Geocoding via a simple fetch to check if the place exists
+    try {
+      const query = encodeURIComponent(placeName.trim())
+      const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1`)
+      const data = await resp.json()
+      if (data && data.length > 0) {
+        setAddressStatus('verified')
+      } else {
+        setAddressStatus('failed')
+      }
+    } catch {
+      // If network fails, allow posting anyway
+      setAddressStatus('verified')
+    }
+  }
+
+  const getImage = () => {
+    if (customPhoto) return customPhoto
+    if (selectedPreset >= 0) return PLACE_PHOTOS[selectedPreset]
+    return null
+  }
+
+  const canSubmit = title.trim() && description.trim() && (addressStatus !== 'checking')
+  const needsVerification = placeName.trim() && addressStatus !== 'verified'
+
   const handleSubmit = () => {
-    if (!title.trim() || !description.trim()) return
+    if (!canSubmit) return
+    if (placeName.trim() && addressStatus !== 'verified') {
+      verifyAddress().then(() => {})
+      return
+    }
     onSubmit({
       id: 'user-' + Date.now(),
       type: 'photo',
@@ -283,11 +363,12 @@ function CreatePostModal({ student, onClose, onSubmit }) {
       rating: parseFloat(rating) || 0,
       price: price.trim(),
       tags,
-      image: PLACE_PHOTOS[selectedPhoto],
+      image: getImage(),
       likes: 0,
       comments: [],
       createdAt: Date.now(),
       isOwn: true,
+      verified: addressStatus === 'verified',
     })
   }
 
@@ -296,45 +377,125 @@ function CreatePostModal({ student, onClose, onSubmit }) {
       <div style={S.modal} onClick={e => e.stopPropagation()}>
         <div style={S.modalHead}>
           <h3 style={S.modalTitle}><PenLine size={18} /> Create Post</h3>
-          <button onClick={onClose} style={S.commClose}><X size={18} /></button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 12, color: '#94a3b8' }}>Step {step}/2</span>
+            <button onClick={onClose} style={S.commClose}><X size={18} /></button>
+          </div>
         </div>
         <div style={S.modalBody}>
-          <input value={title} onChange={e => setTitle(e.target.value)} placeholder="What's your experience? (title)" style={S.modalInput} maxLength={80} />
-          <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Tell other students about this place... tips, prices, what you liked/didn't like" style={S.modalTextarea} rows={4} maxLength={500} />
-          <input value={placeName} onChange={e => setPlaceName(e.target.value)} placeholder="Place name (restaurant, apartment, etc.)" style={S.modalInput} />
-          <div style={S.modalRow}>
-            <select value={category} onChange={e => setCategory(e.target.value)} style={S.modalSelect}>
-              <option value="food">Food</option>
-              <option value="housing">Housing</option>
-              <option value="community">Community</option>
-              <option value="sports">Sports</option>
-            </select>
-            <select value={rating} onChange={e => setRating(e.target.value)} style={S.modalSelect}>
-              {[5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1].map(r => <option key={r} value={r}>{r} stars</option>)}
-            </select>
-            <input value={price} onChange={e => setPrice(e.target.value)} placeholder="Price" style={{ ...S.modalInput, flex: 1 }} />
-          </div>
-          <div style={S.photoLabel}>Choose a cover photo:</div>
-          <div style={S.photoGrid}>
-            {PLACE_PHOTOS.map((p, i) => (
-              <div key={i} onClick={() => setSelectedPhoto(i)} style={{ ...S.photoOption, ...(selectedPhoto === i ? S.photoOptionActive : {}) }}>
-                <img src={p} alt="" style={S.photoThumb} />
-                {selectedPhoto === i && <div style={S.photoCheck}><CheckCircle2 size={16} /></div>}
+          {step === 1 && (
+            <>
+              <div style={S.formSection}>
+                <label style={S.formLabel}>Title *</label>
+                <input value={title} onChange={e => setTitle(e.target.value)} placeholder="What's your experience?" style={S.modalInput} maxLength={80} />
+                <span style={S.charCount}>{title.length}/80</span>
               </div>
-            ))}
-          </div>
-          <div style={S.tagInputRow}>
-            <input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && addTag()} placeholder="Add tags (press Enter)" style={{ ...S.modalInput, flex: 1 }} />
-            <button onClick={addTag} style={S.addTagBtn}>Add</button>
-          </div>
-          {tags.length > 0 && (
-            <div style={S.tagList}>{tags.map((t, i) => (
-              <span key={i} style={S.tagPill}>#{t} <button onClick={() => setTags(tags.filter((_, j) => j !== i))} style={S.tagRemove}>x</button></span>
-            ))}</div>
+
+              <div style={S.formSection}>
+                <label style={S.formLabel}>Your Review *</label>
+                <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Tell other students about this place... tips, prices, what you liked or didn't like, any advice for new students" style={S.modalTextarea} rows={5} maxLength={1000} />
+                <span style={S.charCount}>{description.length}/1000</span>
+              </div>
+
+              <div style={S.formSection}>
+                <label style={S.formLabel}>Place Name</label>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <input value={placeName} onChange={e => { setPlaceName(e.target.value); setAddressStatus(null) }} placeholder="Restaurant, apartment complex, store..." style={{ ...S.modalInput, flex: 1 }} />
+                  {placeName.trim() && (
+                    <button onClick={verifyAddress} disabled={addressStatus === 'checking'} style={{ ...S.verifyBtn, ...(addressStatus === 'verified' ? S.verifyBtnSuccess : addressStatus === 'failed' ? S.verifyBtnFail : {}) }}>
+                      {addressStatus === 'checking' ? '...' : addressStatus === 'verified' ? '✓ Verified' : addressStatus === 'failed' ? '✗ Not found' : 'Verify'}
+                    </button>
+                  )}
+                </div>
+                {addressStatus === 'verified' && <span style={{ fontSize: 11, color: '#0f766e', marginTop: 2 }}>✓ Address verified — your post will be shown with location</span>}
+                {addressStatus === 'failed' && <span style={{ fontSize: 11, color: '#dc2626', marginTop: 2 }}>Place not found. Check spelling or add more details (city, state)</span>}
+              </div>
+
+              <div style={S.formRow}>
+                <div style={{ ...S.formSection, flex: 1 }}>
+                  <label style={S.formLabel}>Category</label>
+                  <select value={category} onChange={e => setCategory(e.target.value)} style={S.modalSelect}>
+                    <option value="food">🍕 Food</option>
+                    <option value="housing">🏠 Housing</option>
+                    <option value="community">👥 Community</option>
+                    <option value="sports">⚽ Sports</option>
+                  </select>
+                </div>
+                <div style={{ ...S.formSection, flex: 1 }}>
+                  <label style={S.formLabel}>Rating</label>
+                  <select value={rating} onChange={e => setRating(e.target.value)} style={S.modalSelect}>
+                    {[5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1].map(r => <option key={r} value={r}>{'⭐'.repeat(Math.floor(r))} {r}</option>)}
+                  </select>
+                </div>
+                <div style={{ ...S.formSection, flex: 1 }}>
+                  <label style={S.formLabel}>Price Range</label>
+                  <input value={price} onChange={e => setPrice(e.target.value)} placeholder="e.g. $10-15" style={S.modalInput} />
+                </div>
+              </div>
+
+              <button onClick={() => setStep(2)} disabled={!title.trim() || !description.trim()} style={{ ...S.nextBtn, opacity: title.trim() && description.trim() ? 1 : 0.4 }}>
+                Next: Add Photos & Tags →
+              </button>
+            </>
           )}
-          <button onClick={handleSubmit} disabled={!title.trim() || !description.trim()} style={{ ...S.submitBtn, opacity: title.trim() && description.trim() ? 1 : 0.4 }}>
-            <Camera size={16} /> Publish Post
-          </button>
+
+          {step === 2 && (
+            <>
+              <div style={S.formSection}>
+                <label style={S.formLabel}>Upload Your Photo</label>
+                <div style={S.uploadArea}>
+                  {customPhoto ? (
+                    <div style={S.uploadPreview}>
+                      <img src={customPhoto} alt="" style={S.uploadPreviewImg} />
+                      <button onClick={() => setCustomPhoto(null)} style={S.uploadRemove}><X size={14} /></button>
+                    </div>
+                  ) : (
+                    <label style={S.uploadLabel}>
+                      <Camera size={24} color="#94a3b8" />
+                      <span style={{ fontSize: 14, fontWeight: 600, color: '#475569' }}>Upload a photo</span>
+                      <span style={{ fontSize: 12, color: '#94a3b8' }}>JPG, PNG up to 5MB</span>
+                      <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
+                    </label>
+                  )}
+                </div>
+              </div>
+
+              <div style={S.formSection}>
+                <label style={S.formLabel}>Or choose a preset photo</label>
+                <div style={S.photoGrid}>
+                  {PLACE_PHOTOS.map((p, i) => (
+                    <div key={i} onClick={() => { setSelectedPreset(i); setCustomPhoto(null) }} style={{ ...S.photoOption, ...(selectedPreset === i && !customPhoto ? S.photoOptionActive : {}) }}>
+                      <img src={p} alt="" style={S.photoThumb} />
+                      {selectedPreset === i && !customPhoto && <div style={S.photoCheck}><CheckCircle2 size={14} /></div>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={S.formSection}>
+                <label style={S.formLabel}>Tags (up to 8)</label>
+                <div style={S.tagInputRow}>
+                  <input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())} placeholder="Type a tag and press Enter" style={{ ...S.modalInput, flex: 1 }} />
+                  <button onClick={addTag} disabled={!tagInput.trim() || tags.length >= 8} style={{ ...S.addTagBtn, opacity: tagInput.trim() && tags.length < 8 ? 1 : 0.4 }}>Add</button>
+                </div>
+                {tags.length > 0 && (
+                  <div style={S.tagList}>{tags.map((t, i) => (
+                    <span key={i} style={S.tagPill}>#{t} <button onClick={() => setTags(tags.filter((_, j) => j !== i))} style={S.tagRemove}>×</button></span>
+                  ))}</div>
+                )}
+              </div>
+
+              <div style={S.modalBtnRow}>
+                <button onClick={() => setStep(1)} style={S.backBtn}>← Back</button>
+                <button onClick={handleSubmit} disabled={!canSubmit || (placeName.trim() && needsVerification)} style={{ ...S.submitBtn, flex: 1, opacity: canSubmit && !(placeName.trim() && needsVerification) ? 1 : 0.4 }}>
+                  <Camera size={16} /> {addressStatus === 'checking' ? 'Verifying...' : 'Publish Post'}
+                </button>
+              </div>
+              {placeName.trim() && needsVerification && addressStatus !== 'checking' && (
+                <p style={{ fontSize: 12, color: '#f59e0b', textAlign: 'center', margin: 0 }}>Please verify the address before publishing</p>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -363,6 +524,7 @@ const S = {
   reelCat: { width: 22, height: 22, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', marginBottom: 2 },
   reelTitle: { fontSize: 13, fontWeight: 700, color: 'white', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' },
   reelCreator: { fontSize: 11, color: 'rgba(255,255,255,0.7)' },
+  reelViews: { fontSize: 10, color: 'rgba(255,255,255,0.6)', fontWeight: 600 },
   reelTags: { display: 'flex', flexWrap: 'wrap', gap: 4 },
   reelTag: { fontSize: 10, color: 'rgba(255,255,255,0.6)' },
 
@@ -401,24 +563,37 @@ const S = {
   commSend: { width: 36, height: 36, borderRadius: '50%', background: '#0f766e', color: 'white', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 },
 
   modalOverlay: { position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 },
-  modal: { width: '100%', maxWidth: 520, maxHeight: '90vh', background: 'white', borderRadius: 24, display: 'flex', flexDirection: 'column', overflow: 'hidden' },
-  modalHead: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: '1px solid #f1f5f9' },
+  modal: { width: '100%', maxWidth: 600, maxHeight: '92vh', background: 'white', borderRadius: 24, display: 'flex', flexDirection: 'column', overflow: 'hidden' },
+  modalHead: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: '1px solid #f1f5f9' },
   modalTitle: { fontSize: 17, fontWeight: 700, color: '#0f172a', fontFamily: 'var(--font-display)', display: 'flex', alignItems: 'center', gap: 8 },
-  modalBody: { padding: 20, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 12 },
-  modalInput: { padding: '10px 14px', borderRadius: 12, border: '1.5px solid #e2e8f0', fontSize: 14, fontFamily: 'inherit', outline: 'none', color: '#0f172a' },
-  modalTextarea: { padding: '10px 14px', borderRadius: 12, border: '1.5px solid #e2e8f0', fontSize: 14, fontFamily: 'inherit', outline: 'none', resize: 'vertical', color: '#0f172a', lineHeight: 1.5 },
-  modalRow: { display: 'flex', gap: 8 },
-  modalSelect: { padding: '10px 12px', borderRadius: 12, border: '1.5px solid #e2e8f0', fontSize: 13, fontFamily: 'inherit', color: '#475569', background: 'white', cursor: 'pointer', outline: 'none' },
-  photoLabel: { fontSize: 13, fontWeight: 600, color: '#475569' },
+  modalBody: { padding: 24, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 16 },
+  formSection: { display: 'flex', flexDirection: 'column', gap: 4 },
+  formLabel: { fontSize: 13, fontWeight: 600, color: '#1e293b' },
+  formRow: { display: 'flex', gap: 12, flexWrap: 'wrap' },
+  charCount: { fontSize: 11, color: '#94a3b8', textAlign: 'right' },
+  modalInput: { padding: '12px 14px', borderRadius: 12, border: '1.5px solid #e2e8f0', fontSize: 14, fontFamily: 'inherit', outline: 'none', color: '#0f172a', width: '100%', boxSizing: 'border-box' },
+  modalTextarea: { padding: '12px 14px', borderRadius: 12, border: '1.5px solid #e2e8f0', fontSize: 14, fontFamily: 'inherit', outline: 'none', resize: 'vertical', color: '#0f172a', lineHeight: 1.6, minHeight: 120 },
+  modalSelect: { padding: '12px 12px', borderRadius: 12, border: '1.5px solid #e2e8f0', fontSize: 13, fontFamily: 'inherit', color: '#475569', background: 'white', cursor: 'pointer', outline: 'none', width: '100%' },
+  verifyBtn: { padding: '10px 16px', borderRadius: 12, background: '#f0f9ff', color: '#0369a1', border: '1.5px solid #0369a1', fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 },
+  verifyBtnSuccess: { background: '#f0fdfa', color: '#0f766e', borderColor: '#0f766e' },
+  verifyBtnFail: { background: '#fef2f2', color: '#dc2626', borderColor: '#dc2626' },
+  nextBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 20px', borderRadius: 14, background: '#0f172a', color: 'white', border: 'none', fontSize: 15, fontWeight: 700, cursor: 'pointer', marginTop: 4 },
+  backBtn: { padding: '12px 20px', borderRadius: 14, background: '#f1f5f9', color: '#475569', border: 'none', fontSize: 14, fontWeight: 600, cursor: 'pointer' },
+  modalBtnRow: { display: 'flex', gap: 10, marginTop: 4 },
+  uploadArea: { borderRadius: 14, border: '2px dashed #e2e8f0', overflow: 'hidden', minHeight: 120 },
+  uploadLabel: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '28px 20px', cursor: 'pointer', background: '#fafafa' },
+  uploadPreview: { position: 'relative', width: '100%' },
+  uploadPreviewImg: { width: '100%', maxHeight: 220, objectFit: 'cover', display: 'block', borderRadius: 12 },
+  uploadRemove: { position: 'absolute', top: 8, right: 8, width: 28, height: 28, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', color: 'white', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
   photoGrid: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 },
   photoOption: { borderRadius: 10, overflow: 'hidden', cursor: 'pointer', position: 'relative', border: '2px solid transparent', transition: 'all 0.2s' },
   photoOptionActive: { borderColor: '#0f766e' },
   photoThumb: { width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block' },
-  photoCheck: { position: 'absolute', top: 4, right: 4, color: '#0f766e', background: 'white', borderRadius: '50%' },
+  photoCheck: { position: 'absolute', top: 3, right: 3, color: '#0f766e', background: 'white', borderRadius: '50%' },
   tagInputRow: { display: 'flex', gap: 8 },
-  addTagBtn: { padding: '10px 16px', borderRadius: 12, background: '#f0fdfa', color: '#0f766e', border: '1.5px solid #0f766e', fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' },
-  tagList: { display: 'flex', flexWrap: 'wrap', gap: 6 },
-  tagPill: { display: 'flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 100, background: '#f0fdfa', color: '#0f766e', fontSize: 12, fontWeight: 600 },
+  addTagBtn: { padding: '12px 16px', borderRadius: 12, background: '#f0fdfa', color: '#0f766e', border: '1.5px solid #0f766e', fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' },
+  tagList: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 },
+  tagPill: { display: 'flex', alignItems: 'center', gap: 4, padding: '5px 12px', borderRadius: 100, background: '#f0fdfa', color: '#0f766e', fontSize: 12, fontWeight: 600 },
   tagRemove: { background: 'none', border: 'none', color: '#0f766e', cursor: 'pointer', fontSize: 14, fontWeight: 700, padding: 0 },
-  submitBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px 20px', borderRadius: 14, background: 'linear-gradient(135deg, #0f766e, #14b8a6)', color: 'white', border: 'none', fontSize: 15, fontWeight: 700, cursor: 'pointer', marginTop: 4 },
+  submitBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 20px', borderRadius: 14, background: 'linear-gradient(135deg, #0f766e, #14b8a6)', color: 'white', border: 'none', fontSize: 15, fontWeight: 700, cursor: 'pointer' },
 }

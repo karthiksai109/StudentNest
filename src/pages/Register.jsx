@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
-import { UserPlus, ArrowRight, ArrowLeft, GraduationCap, Globe, Mail, Phone, User, Lock, Eye, EyeOff, CreditCard } from 'lucide-react'
+import { UserPlus, ArrowRight, ArrowLeft, GraduationCap, Globe, Mail, Phone, User, Lock, Eye, EyeOff, CreditCard, Languages } from 'lucide-react'
 
 export default function Register() {
-  const { registerStudent, colleges, nationalities } = useApp()
+  const { registerStudent, colleges, nationalities, languages } = useApp()
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [form, setForm] = useState({
@@ -16,6 +16,7 @@ export default function Register() {
     collegeName: '',
     nationality: '',
     studentId: '',
+    language: '',
   })
   const [errors, setErrors] = useState({})
   const [showPassword, setShowPassword] = useState(false)
@@ -29,8 +30,8 @@ export default function Register() {
   const validateStep1 = () => {
     const errs = {}
     if (!form.fullName.trim()) errs.fullName = 'Name is required'
-    if (!form.email.trim()) errs.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = 'Enter a valid email'
+    if (!form.email.trim()) errs.email = 'Student email is required'
+    else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = 'Enter a valid student email (e.g. name@university.edu)'
     if (!form.phone.trim()) errs.phone = 'Phone number is required'
     if (!form.password) errs.password = 'Password is required'
     else if (form.password.length < 6) errs.password = 'Password must be at least 6 characters'
@@ -43,6 +44,8 @@ export default function Register() {
     const errs = {}
     if (!form.collegeName) errs.collegeName = 'Select your college'
     if (!form.nationality) errs.nationality = 'Select your nationality'
+    if (!form.studentId.trim()) errs.studentId = 'Student ID is required'
+    if (!form.language) errs.language = 'Select your preferred language'
     setErrors(errs)
     return Object.keys(errs).length === 0
   }
@@ -129,13 +132,13 @@ export default function Register() {
 
               <div style={styles.inputGroup}>
                 <label style={styles.label}>
-                  <Mail size={14} /> Email Address
+                  <Mail size={14} /> Student Email Address
                 </label>
                 <input
                   type="email"
                   value={form.email}
                   onChange={e => update('email', e.target.value)}
-                  placeholder="your.email@university.edu"
+                  placeholder="your.name@university.edu"
                   style={{ ...styles.input, ...(errors.email ? styles.inputError : {}) }}
                 />
                 {errors.email && <span style={styles.error}>{errors.email}</span>}
@@ -234,16 +237,35 @@ export default function Register() {
 
               <div style={styles.inputGroup}>
                 <label style={styles.label}>
-                  <CreditCard size={14} /> Student ID Number <span style={{ color: '#94a3b8', fontWeight: 400 }}>(optional)</span>
+                  <CreditCard size={14} /> Student ID Number
                 </label>
                 <input
                   type="text"
                   value={form.studentId}
                   onChange={e => update('studentId', e.target.value)}
                   placeholder="e.g. STU-2024-001234"
-                  style={styles.input}
+                  style={{ ...styles.input, ...(errors.studentId ? styles.inputError : {}) }}
                 />
-                <span style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>Used for student discount verification</span>
+                {errors.studentId && <span style={styles.error}>{errors.studentId}</span>}
+                <span style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>Required for student discount verification</span>
+              </div>
+
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>
+                  <Languages size={14} /> Preferred Language
+                </label>
+                <select
+                  value={form.language}
+                  onChange={e => update('language', e.target.value)}
+                  style={{ ...styles.input, ...(errors.language ? styles.inputError : {}) }}
+                >
+                  <option value="">Select your preferred language</option>
+                  {languages.map(l => (
+                    <option key={l} value={l}>{l}</option>
+                  ))}
+                </select>
+                {errors.language && <span style={styles.error}>{errors.language}</span>}
+                <span style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>We'll show content in your language when available</span>
               </div>
 
               {submitError && (

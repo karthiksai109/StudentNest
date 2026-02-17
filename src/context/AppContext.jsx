@@ -38,6 +38,15 @@ const NATIONALITIES = [
   "German", "French", "Italian", "Spanish", "Russian"
 ]
 
+const LANGUAGES = [
+  "English", "Hindi", "Telugu", "Tamil", "Malayalam", "Kannada", "Bengali", "Marathi", "Gujarati", "Punjabi",
+  "Mandarin Chinese", "Cantonese", "Korean", "Japanese", "Vietnamese",
+  "Spanish", "Portuguese", "French", "German", "Italian", "Russian",
+  "Arabic", "Turkish", "Persian (Farsi)", "Urdu",
+  "Thai", "Indonesian", "Malay", "Filipino (Tagalog)", "Swahili",
+  "Nepali", "Sinhala", "Amharic"
+]
+
 function getAllUsers() {
   const raw = localStorage.getItem('studentnest_users')
   return raw ? JSON.parse(raw) : []
@@ -148,6 +157,7 @@ export function AppProvider({ children }) {
       logout,
       colleges: COLLEGES_DB,
       nationalities: NATIONALITIES,
+      languages: LANGUAGES,
       toggleJoinGroup,
       isGroupJoined,
       joinedGroups,

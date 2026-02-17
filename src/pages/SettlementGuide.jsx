@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -176,7 +177,15 @@ const CATEGORIES = [
 
 export default function SettlementGuide() {
   const { student } = useApp()
-  const [activeTab, setActiveTab] = useState('sim')
+  const [searchParams] = useSearchParams()
+  const tabFromUrl = searchParams.get('tab')
+  const [activeTab, setActiveTab] = useState(tabFromUrl || 'sim')
+
+  useEffect(() => {
+    if (tabFromUrl && ['sim', 'bank', 'transit', 'internet', 'essentials'].includes(tabFromUrl)) {
+      setActiveTab(tabFromUrl)
+    }
+  }, [tabFromUrl])
   const [expandedItems, setExpandedItems] = useState({})
 
   const toggleExpand = (key) => {

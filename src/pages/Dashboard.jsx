@@ -1,8 +1,9 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { Building2, UtensilsCrossed, Users, Trophy, MapPin, GraduationCap, Globe, Mail, ArrowRight, TrendingUp, Clock, Star, Play, Smartphone, CreditCard, Bus, Wifi, ShoppingBag, Compass, Tag } from 'lucide-react'
+import { Building2, UtensilsCrossed, Users, Trophy, MapPin, GraduationCap, Globe, Mail, ArrowRight, TrendingUp, Clock, Star, Play, Smartphone, CreditCard, Bus, Wifi, ShoppingBag, Compass, Tag, MessageCircle, Languages } from 'lucide-react'
 
 const QUICK_LINKS = [
   { path: '/housing', icon: Building2, title: 'Housing', desc: 'Find affordable apartments and rooms near campus', color: '#0f766e', bg: '#f0fdfa' },
@@ -14,11 +15,11 @@ const QUICK_LINKS = [
 ]
 
 const SETTLEMENT_ACTIONS = [
-  { icon: Smartphone, title: 'Get a Phone Plan', desc: 'Compare Mint Mobile, T-Mobile, Visible & more. From $15/mo.', color: '#0f766e', bg: '#f0fdfa', tab: 'sim' },
-  { icon: CreditCard, title: 'Open a Bank Account', desc: 'Chase, Bank of America — $0 monthly fee for students. $100 bonus.', color: '#7c3aed', bg: '#f5f3ff', tab: 'bank' },
-  { icon: Bus, title: 'Get a Transit Pass', desc: 'Your local transit system, student passes, and money-saving tips.', color: '#0369a1', bg: '#f0f9ff', tab: 'transit' },
-  { icon: Wifi, title: 'Set Up Internet', desc: 'Compare Xfinity, AT&T, T-Mobile 5G. Student deals from $25/mo.', color: '#ea580c', bg: '#fff7ed', tab: 'internet' },
-  { icon: ShoppingBag, title: 'Buy Essentials', desc: 'Kitchen, bedroom, tech — what to buy, where, and how much.', color: '#dc2626', bg: '#fef2f2', tab: 'essentials' },
+  { icon: Smartphone, title: 'Get a Phone Plan', desc: 'Compare Mint Mobile, T-Mobile, Visible & more. From $15/mo.', color: '#0f766e', bg: '#f0fdfa', tab: 'sim', type: 'settle' },
+  { icon: CreditCard, title: 'Open a Bank Account', desc: 'Chase, Bank of America — $0 monthly fee for students. $100 bonus.', color: '#7c3aed', bg: '#f5f3ff', tab: 'bank', type: 'settle' },
+  { icon: Bus, title: 'Get a Transit Pass', desc: 'Open Google Maps with transit directions from your campus.', color: '#0369a1', bg: '#f0f9ff', tab: 'transit', type: 'transit' },
+  { icon: Wifi, title: 'Set Up Internet', desc: 'Compare Xfinity, AT&T, T-Mobile 5G. Student deals from $25/mo.', color: '#ea580c', bg: '#fff7ed', tab: 'internet', type: 'settle' },
+  { icon: ShoppingBag, title: 'Buy Essentials', desc: 'Kitchen, bedroom, tech — what to buy, where, and how much.', color: '#dc2626', bg: '#fef2f2', tab: 'essentials', type: 'settle' },
 ]
 
 const TIPS = [
@@ -28,8 +29,39 @@ const TIPS = [
   { icon: Globe, text: 'Join your national community group early — they often help with airport pickups' },
 ]
 
+function getTimeAgo(ts) {
+  const diff = Date.now() - ts
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return 'Just now'
+  if (mins < 60) return `${mins}m ago`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}h ago`
+  const days = Math.floor(hrs / 24)
+  return `${days}d ago`
+}
+
 export default function Dashboard() {
   const { student } = useApp()
+  const [recentReviews, setRecentReviews] = useState([])
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('sn_user_posts')
+      if (raw) {
+        const posts = JSON.parse(raw)
+        setRecentReviews(posts.sort((a, b) => b.createdAt - a.createdAt).slice(0, 3))
+      }
+    } catch {}
+    // Listen for storage changes from other tabs/components
+    const handler = () => {
+      try {
+        const raw = localStorage.getItem('sn_user_posts')
+        if (raw) setRecentReviews(JSON.parse(raw).sort((a, b) => b.createdAt - a.createdAt).slice(0, 3))
+      } catch {}
+    }
+    window.addEventListener('storage', handler)
+    return () => window.removeEventListener('storage', handler)
+  }, [])
 
   if (!student) return null
 
@@ -109,8 +141,26 @@ export default function Dashboard() {
         <div style={styles.settlementGrid}>
           {SETTLEMENT_ACTIONS.map((action, i) => {
             const Icon = action.icon
+            if (action.type === 'transit') {
+              const college = student?.college
+              const transitUrl = college
+                ? `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(college.name + ', ' + (college.city || ''))}&destination=${encodeURIComponent(college.city || '')}&travelmode=transit`
+                : 'https://www.google.com/maps/?travelmode=transit'
+              return (
+                <a key={i} href={transitUrl} target="_blank" rel="noopener noreferrer" style={styles.settlementCard}>
+                  <div style={{ ...styles.settlementIcon, background: action.bg, color: action.color }}>
+                    <Icon size={22} />
+                  </div>
+                  <div style={styles.settlementContent}>
+                    <h3 style={styles.settlementTitle}>{action.title}</h3>
+                    <p style={styles.settlementDesc}>{action.desc}</p>
+                  </div>
+                  <ArrowRight size={16} color="#94a3b8" style={{ flexShrink: 0 }} />
+                </a>
+              )
+            }
             return (
-              <Link key={i} to={`/settle`} style={styles.settlementCard}>
+              <Link key={i} to={`/settle?tab=${action.tab}`} style={styles.settlementCard}>
                 <div style={{ ...styles.settlementIcon, background: action.bg, color: action.color }}>
                   <Icon size={22} />
                 </div>
@@ -128,6 +178,48 @@ export default function Dashboard() {
           <span>View Full Settlement Guide</span>
           <ArrowRight size={14} />
         </Link>
+
+        {/* Student Reviews Section */}
+        {recentReviews.length > 0 && (
+          <>
+            <h2 style={{ ...styles.sectionTitle, marginTop: 48 }}>
+              <MessageCircle size={20} color="#0f766e" style={{ marginRight: 6 }} />
+              Recent Student Reviews
+            </h2>
+            <div style={styles.reviewsGrid}>
+              {recentReviews.map(review => (
+                <div key={review.id} style={styles.reviewCard}>
+                  <div style={styles.reviewHeader}>
+                    <div style={styles.reviewAvatar}>{review.author?.charAt(0) || 'U'}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={styles.reviewAuthor}>{review.author}</div>
+                      <div style={styles.reviewMeta}>{review.authorSchool} · {getTimeAgo(review.createdAt)}</div>
+                    </div>
+                    {review.rating > 0 && (
+                      <div style={styles.reviewRating}>
+                        <Star size={12} fill="#f59e0b" color="#f59e0b" />
+                        <span>{review.rating}</span>
+                      </div>
+                    )}
+                  </div>
+                  <h4 style={styles.reviewTitle}>{review.title}</h4>
+                  <p style={styles.reviewDesc}>{review.description}</p>
+                  {review.image && <img src={review.image} alt="" style={styles.reviewImage} loading="lazy" />}
+                  {review.placeName && (
+                    <div style={styles.reviewPlace}>
+                      <MapPin size={12} color="#0f766e" />
+                      <span>{review.placeName}</span>
+                      {review.verified && <span style={styles.verifiedBadge}>✓ Verified</span>}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <Link to="/reviews" style={styles.viewAllReviews}>
+              View All Reviews & Post Yours <ArrowRight size={14} />
+            </Link>
+          </>
+        )}
 
         <h2 style={{ ...styles.sectionTitle, marginTop: 48 }}>Tips for New Students</h2>
         <div className="dashboard-tips-grid" style={styles.tipsGrid}>
@@ -353,6 +445,104 @@ const styles = {
     fontSize: 14,
     lineHeight: 1.5,
     color: '#475569',
+  },
+  reviewsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+    gap: 16,
+    marginBottom: 16,
+  },
+  reviewCard: {
+    background: 'white',
+    borderRadius: 16,
+    border: '1px solid #e2e8f0',
+    padding: 18,
+  },
+  reviewHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 10,
+  },
+  reviewAvatar: {
+    width: 34,
+    height: 34,
+    borderRadius: '50%',
+    background: 'linear-gradient(135deg, #0f766e, #14b8a6)',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    fontWeight: 700,
+    flexShrink: 0,
+  },
+  reviewAuthor: {
+    fontSize: 13,
+    fontWeight: 700,
+    color: '#0f172a',
+  },
+  reviewMeta: {
+    fontSize: 11,
+    color: '#94a3b8',
+  },
+  reviewRating: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 3,
+    fontSize: 13,
+    fontWeight: 600,
+    color: '#f59e0b',
+  },
+  reviewTitle: {
+    fontSize: 15,
+    fontWeight: 700,
+    color: '#0f172a',
+    marginBottom: 4,
+    fontFamily: 'var(--font-display)',
+  },
+  reviewDesc: {
+    fontSize: 13,
+    color: '#475569',
+    lineHeight: 1.5,
+    marginBottom: 8,
+    display: '-webkit-box',
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+  },
+  reviewImage: {
+    width: '100%',
+    borderRadius: 10,
+    maxHeight: 160,
+    objectFit: 'cover',
+    marginBottom: 8,
+  },
+  reviewPlace: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 5,
+    fontSize: 12,
+    color: '#0f766e',
+    padding: '4px 10px',
+    borderRadius: 8,
+    background: '#f0fdfa',
+  },
+  verifiedBadge: {
+    fontSize: 10,
+    fontWeight: 600,
+    color: '#0f766e',
+    marginLeft: 'auto',
+  },
+  viewAllReviews: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 6,
+    fontSize: 14,
+    fontWeight: 600,
+    color: '#0f766e',
+    textDecoration: 'none',
+    marginBottom: 16,
   },
 }
 

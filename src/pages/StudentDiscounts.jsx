@@ -2,7 +2,26 @@ import { useState, useMemo } from 'react'
 import { useApp } from '../context/AppContext'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { Tag, ExternalLink, Search, Filter, CheckCircle2, Star, Percent, ShoppingBag, Laptop, Music, Plane, BookOpen, Utensils, Shirt, Dumbbell, CreditCard, Smartphone, Gift, ChevronDown, BadgeCheck, Sparkles } from 'lucide-react'
+import { Tag, ExternalLink, Search, Filter, CheckCircle2, Star, Percent, ShoppingBag, Laptop, Music, Plane, BookOpen, Utensils, Shirt, Dumbbell, CreditCard, Smartphone, Gift, ChevronDown, BadgeCheck, Sparkles, Clock, RefreshCw } from 'lucide-react'
+
+// Daily rotation: use day-of-year as seed to pick different featured deals each day
+function getDaySeed() {
+  const now = new Date()
+  const start = new Date(now.getFullYear(), 0, 0)
+  const diff = now - start
+  return Math.floor(diff / (1000 * 60 * 60 * 24))
+}
+
+function shuffleWithSeed(arr, seed) {
+  const shuffled = [...arr]
+  let s = seed
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    s = (s * 16807 + 0) % 2147483647
+    const j = s % (i + 1)
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
 
 const DISCOUNT_CATEGORIES = [
   { id: 'all', label: 'All Deals', icon: Sparkles },
@@ -111,7 +130,21 @@ export default function StudentDiscounts() {
     localStorage.setItem('studentnest_claimed_deals', JSON.stringify(updated))
   }
 
-  const trendingDeals = STUDENT_DISCOUNTS.filter(d => d.trending).slice(0, 6)
+  // Daily rotation — different featured deals every day
+  const daySeed = getDaySeed()
+  const todaysDeals = useMemo(() => {
+    const shuffled = shuffleWithSeed(STUDENT_DISCOUNTS, daySeed)
+    return shuffled.slice(0, 6)
+  }, [daySeed])
+  const dailyDealOfDay = todaysDeals[0]
+  const nextRefresh = useMemo(() => {
+    const now = new Date()
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+    const diff = tomorrow - now
+    const hrs = Math.floor(diff / (1000 * 60 * 60))
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+    return `${hrs}h ${mins}m`
+  }, [])
 
   if (!student) return null
 
@@ -156,14 +189,42 @@ export default function StudentDiscounts() {
             </div>
           </div>
 
-          {/* Trending */}
+          {/* Deal of the Day */}
+          {dailyDealOfDay && (
+            <div style={S.dealOfDay}>
+              <div style={S.dealOfDayHeader}>
+                <div style={S.dealOfDayBadge}>
+                  <Sparkles size={14} />
+                  <span>Deal of the Day</span>
+                </div>
+                <div style={S.dealOfDayTimer}>
+                  <Clock size={12} />
+                  <span>Refreshes in {nextRefresh}</span>
+                </div>
+              </div>
+              <div style={S.dealOfDayContent}>
+                <div style={S.dealOfDayLogo}>{dailyDealOfDay.logo}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={S.dealOfDayBrand}>{dailyDealOfDay.brand}</div>
+                  <div style={S.dealOfDayTitle}>{dailyDealOfDay.title}</div>
+                  <div style={S.dealOfDayDiscount}>{dailyDealOfDay.discount}</div>
+                </div>
+                <a href={dailyDealOfDay.url} target="_blank" rel="noopener noreferrer" style={S.dealOfDayBtn}>
+                  Get Deal <ExternalLink size={12} />
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Today's Picks — rotates daily */}
           <div style={S.section}>
             <h2 style={S.sectionTitle}>
-              <Sparkles size={18} color="#f59e0b" />
-              Trending Now
+              <RefreshCw size={16} color="#f59e0b" />
+              Today's Picks
+              <span style={S.dailyNote}>Updates daily</span>
             </h2>
             <div style={S.trendingScroll}>
-              {trendingDeals.map(deal => (
+              {todaysDeals.map(deal => (
                 <a key={deal.id} href={deal.url} target="_blank" rel="noopener noreferrer" style={S.trendingCard}>
                   <div style={S.trendingLogo}>{deal.logo}</div>
                   <div style={S.trendingBrand}>{deal.brand}</div>
@@ -344,6 +405,36 @@ const S = {
     display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 16px',
     borderRadius: 100, background: 'rgba(255,255,255,0.2)', color: 'white',
     fontSize: 13, fontWeight: 600, marginTop: 8,
+  },
+  dealOfDay: {
+    background: 'linear-gradient(135deg, #fef3c7, #fde68a)', borderRadius: 18,
+    padding: 20, marginBottom: 28, border: '1px solid rgba(245,158,11,0.3)',
+  },
+  dealOfDayHeader: {
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14,
+  },
+  dealOfDayBadge: {
+    display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 700,
+    color: '#92400e', fontFamily: 'var(--font-display)',
+  },
+  dealOfDayTimer: {
+    display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#a16207', fontWeight: 500,
+  },
+  dealOfDayContent: {
+    display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
+  },
+  dealOfDayLogo: { fontSize: 40 },
+  dealOfDayBrand: { fontSize: 13, fontWeight: 600, color: '#92400e' },
+  dealOfDayTitle: { fontSize: 17, fontWeight: 700, color: '#78350f', fontFamily: 'var(--font-display)' },
+  dealOfDayDiscount: { fontSize: 14, fontWeight: 700, color: '#b45309', marginTop: 2 },
+  dealOfDayBtn: {
+    display: 'flex', alignItems: 'center', gap: 6, padding: '10px 20px', borderRadius: 12,
+    background: '#92400e', color: 'white', fontSize: 14, fontWeight: 600,
+    textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0,
+  },
+  dailyNote: {
+    fontSize: 11, fontWeight: 500, color: '#94a3b8', marginLeft: 4,
+    padding: '2px 8px', borderRadius: 100, background: '#f1f5f9',
   },
   section: { marginBottom: 32 },
   sectionTitle: {
