@@ -74,15 +74,6 @@ const VIDEOS_BY_LANGUAGE = {
   ],
 }
 
-// English fallback videos — shown after language-specific ones
-const GENERIC_VIDEOS = [
-  { id: 'g1', platform: 'youtube', category: 'housing', title: 'Student Housing in America | Rent | University Housing', creator: 'Student Guide', url: 'https://www.youtube.com/watch?v=_NNA7sHzAQw', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['housing', 'rent', 'USA'], views: '35K' },
-  { id: 'g2', platform: 'youtube', category: 'housing', title: 'Top Student Housing near University of Texas, Austin', creator: 'Amber', url: 'https://www.youtube.com/watch?v=Rw0ofEm2imw', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['UTAustin', 'studentHousing'], views: '18K' },
-  { id: 'g3', platform: 'youtube', category: 'food', title: 'Indian Student Shops for Groceries in USA | Culture Shock', creator: 'Indian Student', url: 'https://www.youtube.com/watch?v=wSmedJplVnQ', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['grocery', 'cultureShock', 'Indian'], views: '48K' },
-  { id: 'g4', platform: 'youtube', category: 'community', title: 'A Day in My Life | Arizona State University | Indian Student', creator: 'Indian Student', url: 'https://www.youtube.com/watch?v=NooVogP3J6Y', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['ASU', 'dayInLife', 'Indian'], views: '29K' },
-  { id: 'g5', platform: 'youtube', category: 'food', title: 'UCLA is Ranked #1 for Best College Food', creator: 'UCLA', url: 'https://www.youtube.com/watch?v=CMZwnuEJeCI', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['UCLA', 'bestFood', 'diningHall'], views: '180K' },
-  { id: 'g6', platform: 'youtube', category: 'housing', title: 'Northeastern University $5000 Apartment Tour in USA', creator: 'Student Vlogger', url: 'https://www.youtube.com/watch?v=dUhHWc6RBVI', thumbnail: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&h=700&fit=crop', tags: ['Northeastern', 'apartmentTour', 'Boston'], views: '42K' },
-]
 
 const PLACE_PHOTOS = [
   'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600&h=400&fit=crop',
@@ -128,15 +119,15 @@ export default function VideoFeed() {
   useEffect(() => { localStorage.setItem('sn_liked', JSON.stringify(liked)) }, [liked])
   useEffect(() => { localStorage.setItem('sn_user_posts', JSON.stringify(userPosts)) }, [userPosts])
 
-  // Build video list: language-specific FIRST → university-specific → generic English
+  // ONLY show student's own university + their language videos. No other university content.
   const collegeName = student?.college?.name || student?.collegeName || ''
   const studentLang = student?.language || ''
   const langVideos = VIDEOS_BY_LANGUAGE[studentLang] || []
   const uniVideos = VIDEOS_BY_UNIVERSITY[collegeName] || []
-  // Deduplicate by URL — language videos take priority, then university, then generic
+  // Language videos first, then university videos. Deduplicate by URL.
   const seenUrls = new Set()
   const deduped = []
-  for (const list of [langVideos, uniVideos, GENERIC_VIDEOS]) {
+  for (const list of [langVideos, uniVideos]) {
     for (const v of list) {
       if (!seenUrls.has(v.url)) { seenUrls.add(v.url); deduped.push(v) }
     }
@@ -197,15 +188,22 @@ export default function VideoFeed() {
 
           {tab === 'videos' && (
             <div style={S.reelsGrid}>
-              <p style={S.reelsNote}>
-                {langVideos.length > 0 && uniVideos.length > 0
-                  ? `${studentLang} videos + ${collegeName} content shown first. Tap to watch on YouTube.`
-                  : langVideos.length > 0
-                  ? `${studentLang} student videos shown first. Tap to watch on YouTube.`
-                  : uniVideos.length > 0
-                  ? `${collegeName} videos shown first. Tap to watch on YouTube.`
-                  : 'Real student videos from YouTube. Tap to watch.'}
-              </p>
+              {allVideos.length === 0 && (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px 20px' }}>
+                  <Play size={40} color="#cbd5e1" />
+                  <h3 style={{ color: '#475569', fontSize: 16, fontWeight: 700, marginTop: 12 }}>No videos yet for {collegeName || 'your university'}</h3>
+                  <p style={{ color: '#94a3b8', fontSize: 14, lineHeight: 1.5, marginTop: 4 }}>We're adding videos for more universities. Check back soon!</p>
+                </div>
+              )}
+              {allVideos.length > 0 && (
+                <p style={S.reelsNote}>
+                  {langVideos.length > 0 && uniVideos.length > 0
+                    ? `${studentLang} videos + ${collegeName} content. Tap to watch on YouTube.`
+                    : langVideos.length > 0
+                    ? `${studentLang} student videos. Tap to watch on YouTube.`
+                    : `${collegeName} videos. Tap to watch on YouTube.`}
+                </p>
+              )}
               {filteredVideos.map(reel => (
                 <a key={reel.id} href={reel.url} target="_blank" rel="noopener noreferrer" style={S.reelCard}>
                   <img src={reel.thumbnail} alt="" style={S.reelThumb} loading="lazy" />
