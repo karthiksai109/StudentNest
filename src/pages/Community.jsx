@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 import PlaceCard from '../components/PlaceCard'
 import SearchFilter from '../components/SearchFilter'
 import { generateCommunityData } from '../utils/mockData'
-import { Users, MapPin, MessageCircle, Calendar, UserPlus, UserMinus, Check } from 'lucide-react'
+import { Users, MapPin, MessageCircle, Calendar, UserPlus, UserMinus, Check, ExternalLink } from 'lucide-react'
 
 export default function Community() {
   const { student, toggleJoinGroup, isGroupJoined } = useApp()
@@ -169,16 +169,23 @@ export default function Community() {
                   </div>
                 )}
 
-                <button
-                  onClick={() => toggleJoinGroup(group.id)}
-                  style={isGroupJoined(group.id) ? styles.joinedBtn : styles.joinBtn}
-                >
-                  {isGroupJoined(group.id) ? (
-                    <><Check size={16} /> Joined</>
-                  ) : (
-                    <><UserPlus size={16} /> Join Group</>
+                <div style={styles.btnRow}>
+                  {group.joinUrl && (
+                    <a href={group.joinUrl} target="_blank" rel="noopener noreferrer" style={styles.socialBtn}>
+                      <ExternalLink size={14} /> Join on {group.socialPlatform || group.platform}
+                    </a>
                   )}
-                </button>
+                  <button
+                    onClick={() => toggleJoinGroup(group.id)}
+                    style={isGroupJoined(group.id) ? styles.joinedBtn : styles.joinBtn}
+                  >
+                    {isGroupJoined(group.id) ? (
+                      <><Check size={16} /> Joined</>
+                    ) : (
+                      <><UserPlus size={16} /> Join Group</>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -384,6 +391,27 @@ const styles = {
     fontSize: 11,
     color: '#7c3aed',
     fontWeight: 600,
+  },
+  btnRow: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+  },
+  socialBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    width: '100%',
+    padding: '12px',
+    borderRadius: 10,
+    background: '#0f172a',
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 600,
+    textDecoration: 'none',
+    boxSizing: 'border-box',
+    transition: 'all 0.2s',
   },
   joinBtn: {
     display: 'flex',

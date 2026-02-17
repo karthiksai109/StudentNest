@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 import PlaceCard from '../components/PlaceCard'
 import SearchFilter from '../components/SearchFilter'
 import { generateSportsData } from '../utils/mockData'
-import { Trophy, MapPin, Users, Dumbbell, Calendar } from 'lucide-react'
+import { Trophy, MapPin, Users, Dumbbell, Calendar, ExternalLink } from 'lucide-react'
 
 export default function Sports() {
   const { student } = useApp()
@@ -169,9 +169,10 @@ export default function Sports() {
                 )}
 
                 <div style={styles.contactSection}>
-                  <div>Contact: {sport.contact.name}</div>
-                  {sport.contact.phone && <div>{sport.contact.phone}</div>}
-                  {sport.contact.email && <div>{sport.contact.email}</div>}
+                  <div style={{ fontWeight: 600 }}>Contact: {sport.contact.name}</div>
+                  {sport.contact.phone && <a href={`tel:${sport.contact.phone}`} style={styles.contactLink}>{sport.contact.phone}</a>}
+                  {sport.contact.email && <a href={`mailto:${sport.contact.email}`} style={styles.contactLink}>{sport.contact.email}</a>}
+                  {sport.socialPlatform && <div style={styles.platformTag}>📍 {sport.socialPlatform}</div>}
                 </div>
 
                 {sport.upcomingEvents.length > 0 && (
@@ -191,9 +192,9 @@ export default function Sports() {
                   </div>
                 )}
 
-                <button style={styles.joinBtn}>
-                  Join Club
-                </button>
+                <a href={sport.joinUrl || '#'} target="_blank" rel="noopener noreferrer" style={styles.joinBtn}>
+                  <ExternalLink size={14} /> Join on {sport.socialPlatform || 'Website'}
+                </a>
               </div>
             </div>
           ))}
@@ -426,6 +427,17 @@ const styles = {
     fontSize: 12,
     color: '#64748b',
   },
+  contactLink: {
+    color: '#0369a1',
+    textDecoration: 'none',
+    fontSize: 13,
+  },
+  platformTag: {
+    fontSize: 11,
+    color: '#64748b',
+    fontWeight: 500,
+    marginTop: 2,
+  },
   joinBtn: {
     display: 'flex',
     alignItems: 'center',
@@ -441,6 +453,8 @@ const styles = {
     border: 'none',
     cursor: 'pointer',
     transition: 'all 0.2s',
+    textDecoration: 'none',
+    boxSizing: 'border-box',
   },
   empty: {
     textAlign: 'center',
