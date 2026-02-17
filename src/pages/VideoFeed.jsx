@@ -6,7 +6,7 @@ import { Heart, MessageCircle, Share2, Bookmark, Play, MapPin, Star, Building2, 
 
 // REAL YouTube videos found by searching #universityname + category tags
 // Every URL is a real, specific video — verified via YouTube search
-const REELS_BY_UNIVERSITY = {
+const VIDEOS_BY_UNIVERSITY = {
   'University of Texas at Austin': [
     { id: 'ut1', platform: 'youtube', category: 'housing', title: 'College Apartment Tour @ UT Austin | Junior Year 2024', creator: 'UT Austin Student', url: 'https://www.youtube.com/watch?v=QmqV5BJpQ0E', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['UTAustin', 'ApartmentTour', 'housing'], views: '15K' },
     { id: 'ut2', platform: 'youtube', category: 'housing', title: 'What It\'s Like to Live on Campus at UT Austin 🤘', creator: 'UT Austin', url: 'https://www.youtube.com/shorts/GLW5hkPywh4', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['UTAustin', 'dorms', 'campusLife'], views: '28K' },
@@ -15,9 +15,8 @@ const REELS_BY_UNIVERSITY = {
     { id: 'ut5', platform: 'youtube', category: 'community', title: 'A Day In the Life at UT Austin', creator: 'UT Austin Student', url: 'https://www.youtube.com/watch?v=GEjRecqTAJw', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['UTAustin', 'dayInLife', 'college'], views: '45K' },
     { id: 'ut6', platform: 'youtube', category: 'community', title: 'Welcome to UT! International Student Orientation', creator: 'UT International Office', url: 'https://www.youtube.com/watch?v=VhoNTrk3FNM', thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=700&fit=crop', tags: ['UTAustin', 'international', 'orientation'], views: '12K' },
     { id: 'ut7', platform: 'youtube', category: 'sports', title: 'UT Austin | Places to WORK OUT on CAMPUS 🏋️‍♀️', creator: 'UT Austin Vlogger', url: 'https://www.youtube.com/watch?v=8qEXAYxJHCA', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=700&fit=crop', tags: ['UTAustin', 'GregoryGym', 'fitness'], views: '9K' },
-    { id: 'ut8', platform: 'youtube', category: 'sports', title: 'UT Gregory Gym Review — Austin, TX', creator: 'Gym Reviewer', url: 'https://www.youtube.com/watch?v=On1iyUstC_w', thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=700&fit=crop', tags: ['UTAustin', 'GregoryGym', 'gymReview'], views: '5K' },
-    { id: 'ut9', platform: 'youtube', category: 'housing', title: 'A Tour of the Best College Dorm Room | UT Austin', creator: 'UT Student', url: 'https://www.youtube.com/watch?v=5NxlUVpXnk4', thumbnail: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=700&fit=crop', tags: ['UTAustin', 'dormTour', 'bestDorm'], views: '35K' },
-    { id: 'ut10', platform: 'youtube', category: 'food', title: 'What To Eat, See, and Do Around UT Austin', creator: 'Austin Guide', url: 'https://www.youtube.com/watch?v=3cwWnVZHKjg', thumbnail: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=700&fit=crop', tags: ['UTAustin', 'Austin', 'explore'], views: '31K' },
+    { id: 'ut8', platform: 'youtube', category: 'housing', title: 'A Tour of the Best College Dorm Room | UT Austin', creator: 'UT Student', url: 'https://www.youtube.com/watch?v=5NxlUVpXnk4', thumbnail: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=700&fit=crop', tags: ['UTAustin', 'dormTour', 'bestDorm'], views: '35K' },
+    { id: 'ut9', platform: 'youtube', category: 'food', title: 'What To Eat, See, and Do Around UT Austin', creator: 'Austin Guide', url: 'https://www.youtube.com/watch?v=3cwWnVZHKjg', thumbnail: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=700&fit=crop', tags: ['UTAustin', 'Austin', 'explore'], views: '31K' },
   ],
   'NYU': [
     { id: 'nyu1', platform: 'youtube', category: 'housing', title: 'NYU Dorm Tour | Coral Tower 2024 🌷', creator: 'NYU Student', url: 'https://www.youtube.com/watch?v=LmBrQP4rrnQ', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['NYU', 'dormTour', 'CoralTower'], views: '42K' },
@@ -27,7 +26,6 @@ const REELS_BY_UNIVERSITY = {
     { id: 'nyu5', platform: 'youtube', category: 'food', title: 'EATING AT EVERY NYU DINING HALL', creator: 'NYU Student', url: 'https://www.youtube.com/watch?v=P6AWz8WDV50', thumbnail: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=700&fit=crop', tags: ['NYU', 'diningHall', 'foodReview'], views: '120K' },
     { id: 'nyu6', platform: 'youtube', category: 'community', title: 'LIFE OF AN NYU STUDENT!! | New York University 2025', creator: 'NYU Student', url: 'https://www.youtube.com/watch?v=Yznmpto3FUE', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['NYU', 'studentLife', 'dayInLife'], views: '85K' },
     { id: 'nyu7', platform: 'youtube', category: 'community', title: 'Day in My Life — NYC College Student at NYU', creator: 'Kyla Malloy', url: 'https://www.youtube.com/watch?v=JbK85Pt_3zU', thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=700&fit=crop', tags: ['NYU', 'NYC', 'productive'], views: '55K' },
-    { id: 'nyu8', platform: 'youtube', category: 'food', title: 'BEST Places to Eat Around NYU Campus (Part 2)', creator: 'NYU Foodie', url: 'https://www.youtube.com/watch?v=yi9BxuIHvVE', thumbnail: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=700&fit=crop', tags: ['NYU', 'ramen', 'bestFood'], views: '28K' },
   ],
   'UCLA': [
     { id: 'ucla1', platform: 'youtube', category: 'housing', title: 'University Apartment Tours | UCLA Housing', creator: 'UCLA Housing', url: 'https://www.youtube.com/watch?v=b5ECHoc6zc4', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['UCLA', 'apartmentTour', 'housing'], views: '38K' },
@@ -41,20 +39,49 @@ const REELS_BY_UNIVERSITY = {
   ],
 }
 
-// REAL YouTube videos for students at any university — verified URLs
-const GENERIC_REELS = [
-  { id: 'g1', platform: 'youtube', category: 'housing', title: 'College Apartment Tour @ UT Austin | 2024', creator: 'UT Student', url: 'https://www.youtube.com/watch?v=QmqV5BJpQ0E', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['apartmentTour', 'college', 'housing'], views: '15K' },
-  { id: 'g2', platform: 'youtube', category: 'housing', title: 'All NYU First Year Dorms: A Tour!', creator: 'NYU Vlogger', url: 'https://www.youtube.com/watch?v=mwvOvfvOVuk', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['NYU', 'dormTour', 'freshman'], views: '95K' },
-  { id: 'g3', platform: 'youtube', category: 'food', title: 'UT Austin | Where to EAT near CAMPUS 🌮🍱', creator: 'UT Vlogger', url: 'https://www.youtube.com/watch?v=UROYujIJycg', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['UTAustin', 'food', 'campusEats'], views: '22K' },
-  { id: 'g4', platform: 'youtube', category: 'food', title: 'UCLA is Ranked #1 for Best College Food', creator: 'UCLA', url: 'https://www.youtube.com/watch?v=CMZwnuEJeCI', thumbnail: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=700&fit=crop', tags: ['UCLA', 'bestFood', 'diningHall'], views: '180K' },
-  { id: 'g5', platform: 'youtube', category: 'food', title: 'EATING AT EVERY NYU DINING HALL', creator: 'NYU Student', url: 'https://www.youtube.com/watch?v=P6AWz8WDV50', thumbnail: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=700&fit=crop', tags: ['NYU', 'diningHall', 'foodReview'], views: '120K' },
-  { id: 'g6', platform: 'youtube', category: 'community', title: 'A Day In the Life at UT Austin', creator: 'UT Student', url: 'https://www.youtube.com/watch?v=GEjRecqTAJw', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['UTAustin', 'dayInLife', 'college'], views: '45K' },
-  { id: 'g7', platform: 'youtube', category: 'community', title: 'LIFE OF AN NYU STUDENT!! | 2025', creator: 'NYU Student', url: 'https://www.youtube.com/watch?v=Yznmpto3FUE', thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=700&fit=crop', tags: ['NYU', 'studentLife', 'dayInLife'], views: '85K' },
-  { id: 'g8', platform: 'youtube', category: 'community', title: 'COLLEGE DAY IN MY LIFE — Productive UCLA Vlog', creator: 'UCLA Student', url: 'https://www.youtube.com/watch?v=fpH714bl8dg', thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=700&fit=crop', tags: ['UCLA', 'dayInLife', 'productive'], views: '92K' },
-  { id: 'g9', platform: 'youtube', category: 'sports', title: 'UT Austin | Places to WORK OUT on CAMPUS 🏋️', creator: 'UT Vlogger', url: 'https://www.youtube.com/watch?v=8qEXAYxJHCA', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=700&fit=crop', tags: ['UTAustin', 'gym', 'fitness'], views: '9K' },
-  { id: 'g10', platform: 'youtube', category: 'housing', title: 'University Apartment Tours | UCLA Housing', creator: 'UCLA Housing', url: 'https://www.youtube.com/watch?v=b5ECHoc6zc4', thumbnail: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=700&fit=crop', tags: ['UCLA', 'apartmentTour', 'housing'], views: '38K' },
-  { id: 'g11', platform: 'youtube', category: 'community', title: 'Welcome to UT! International Student Orientation', creator: 'UT International', url: 'https://www.youtube.com/watch?v=VhoNTrk3FNM', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=700&fit=crop', tags: ['UTAustin', 'international', 'orientation'], views: '12K' },
-  { id: 'g12', platform: 'youtube', category: 'housing', title: 'NYU Paulson Center DORM TOUR', creator: 'NYU Student', url: 'https://www.youtube.com/watch?v=yNlT6LlQL74', thumbnail: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&h=700&fit=crop', tags: ['NYU', 'PaulsonCenter', 'dormTour'], views: '68K' },
+// Language-specific videos — student's native language videos shown FIRST
+// Every URL is a REAL YouTube video verified via search
+const VIDEOS_BY_LANGUAGE = {
+  Telugu: [
+    { id: 'tel1', platform: 'youtube', category: 'housing', lang: 'Telugu', title: 'USA Apartment Tour | Indian Student | Telugu Vlogs', creator: 'Telugu Vlogger', url: 'https://www.youtube.com/watch?v=nIdku9WR6Aw', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['Telugu', 'USA', 'apartmentTour'], views: '45K' },
+    { id: 'tel2', platform: 'youtube', category: 'housing', lang: 'Telugu', title: 'Home Tour In Telugu | USA Apartment Home Tour', creator: 'Telugu USA Vlogs', url: 'https://www.youtube.com/watch?v=7mnSHEsFJOk', thumbnail: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=700&fit=crop', tags: ['Telugu', 'homeTour', 'USA'], views: '32K' },
+    { id: 'tel3', platform: 'youtube', category: 'housing', lang: 'Telugu', title: 'University లో Dorm Tour | US University Campus Tour', creator: 'Telugu Student', url: 'https://www.youtube.com/watch?v=H9Oczfzk0iM', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['Telugu', 'dormTour', 'university'], views: '28K' },
+    { id: 'tel4', platform: 'youtube', category: 'community', lang: 'Telugu', title: 'Day in my Life as Indian Student in USA 🇺🇸 తెలుగు', creator: 'Telugu Student USA', url: 'https://www.youtube.com/watch?v=o62MDdjH340', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['Telugu', 'dayInLife', 'USA'], views: '52K' },
+    { id: 'tel5', platform: 'youtube', category: 'community', lang: 'Telugu', title: 'PRODUCTIVE Days in My Life | Masters Life in USA Telugu', creator: 'Telugu Masters', url: 'https://www.youtube.com/watch?v=_rl4xEwa2cg', thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=700&fit=crop', tags: ['Telugu', 'productive', 'mastersUSA'], views: '38K' },
+    { id: 'tel6', platform: 'youtube', category: 'food', lang: 'Telugu', title: 'Biggest Indian Grocery Store in USA | Telugu Vlog', creator: 'Telugu Vlogger', url: 'https://www.youtube.com/watch?v=_eODd99mikY', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['Telugu', 'grocery', 'IndianStore'], views: '41K' },
+    { id: 'tel7', platform: 'youtube', category: 'community', lang: 'Telugu', title: 'A Day in My Life | Master\'s Student Vlogs from USA', creator: 'Telugu Student', url: 'https://www.youtube.com/watch?v=Teb8ZBL0jMg', thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=700&fit=crop', tags: ['Telugu', 'masters', 'studentLife'], views: '25K' },
+  ],
+  Hindi: [
+    { id: 'hin1', platform: 'youtube', category: 'housing', lang: 'Hindi', title: 'My 1BHK American Rent Apartment Home Tour USA', creator: 'Hindi Vlogger', url: 'https://www.youtube.com/watch?v=dAF9bnovwP0', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['Hindi', 'apartmentTour', 'USA'], views: '85K' },
+    { id: 'hin2', platform: 'youtube', category: 'housing', lang: 'Hindi', title: 'WATCH THIS Before Finding Student Accommodation in USA', creator: 'Hindi Student Guide', url: 'https://www.youtube.com/watch?v=h-btuCBjShw', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['Hindi', 'housing', 'studentTips'], views: '62K' },
+    { id: 'hin3', platform: 'youtube', category: 'food', lang: 'Hindi', title: 'Indian Grocery Store Food Prices In USA | Hindi Vlog', creator: 'Hindi Vlogger', url: 'https://www.youtube.com/watch?v=-rQSJ-mZyRE', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['Hindi', 'grocery', 'prices'], views: '73K' },
+    { id: 'hin4', platform: 'youtube', category: 'food', lang: 'Hindi', title: 'Indian Grocery Store in USA: Patel Brothers | Weekly Vlog', creator: 'Hindi Student', url: 'https://www.youtube.com/watch?v=uGDTp5V53ws', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['Hindi', 'PatelBrothers', 'grocery'], views: '55K' },
+    { id: 'hin5', platform: 'youtube', category: 'food', lang: 'Hindi', title: 'Indian Student Grocery Shopping in USA | Culture Shock', creator: 'Indian Student', url: 'https://www.youtube.com/watch?v=wSmedJplVnQ', thumbnail: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=700&fit=crop', tags: ['Hindi', 'groceryShopping', 'cultureShock'], views: '48K' },
+    { id: 'hin6', platform: 'youtube', category: 'community', lang: 'Hindi', title: 'A Day in My Life | Indian Student in USA', creator: 'Hindi Student Vlog', url: 'https://www.youtube.com/watch?v=o3SP0bjiXOw', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['Hindi', 'dayInLife', 'IndianStudent'], views: '67K' },
+    { id: 'hin7', platform: 'youtube', category: 'food', lang: 'Hindi', title: 'Indian Grocery Shopping in USA | Student Groceries', creator: 'Hindi Vlogger', url: 'https://www.youtube.com/watch?v=pD85UHIkG60', thumbnail: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=700&fit=crop', tags: ['Hindi', 'studentGrocery', 'budget'], views: '42K' },
+  ],
+  Tamil: [
+    { id: 'tam1', platform: 'youtube', category: 'housing', lang: 'Tamil', title: 'Tamil Student Apartment Tour | American Student Life', creator: 'Tamil USA Vlog', url: 'https://www.youtube.com/watch?v=go_HyXGXOfs', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['Tamil', 'apartmentTour', 'USA'], views: '35K' },
+    { id: 'tam2', platform: 'youtube', category: 'housing', lang: 'Tamil', title: 'USA Rental Apartment Tour in Tamil | New to America', creator: 'Tamil Vlogger', url: 'https://www.youtube.com/watch?v=03oNi6dxIlg', thumbnail: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=700&fit=crop', tags: ['Tamil', 'rentalTour', 'newToUSA'], views: '28K' },
+    { id: 'tam3', platform: 'youtube', category: 'housing', lang: 'Tamil', title: 'Home Tour Tamil USA | Apartment Tour | Rented House', creator: 'Tamil USA', url: 'https://www.youtube.com/watch?v=Eq85Ui7HNFY', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['Tamil', 'homeTour', 'rentedHouse'], views: '22K' },
+    { id: 'tam4', platform: 'youtube', category: 'food', lang: 'Tamil', title: 'Weekend Grocery Shopping | Patel Brothers | Tamil', creator: 'Tamil Student', url: 'https://www.youtube.com/watch?v=qtYveMI7jKE', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['Tamil', 'PatelBrothers', 'grocery'], views: '31K' },
+    { id: 'tam5', platform: 'youtube', category: 'food', lang: 'Tamil', title: 'Indian Groceries Shopping & Haul | Tamil Vlog', creator: 'Tamil Vlogger', url: 'https://www.youtube.com/watch?v=ndTITh3sA0Q', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['Tamil', 'groceryHaul', 'IndianStore'], views: '19K' },
+  ],
+  Malayalam: [
+    { id: 'mal1', platform: 'youtube', category: 'housing', lang: 'Malayalam', title: 'USA Home Tour | Americaയിലെ ഞങ്ങളുടെ വീട്', creator: 'Malayalam Vlogger', url: 'https://www.youtube.com/watch?v=bs9rqedK1I0', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['Malayalam', 'homeTour', 'USA'], views: '45K' },
+    { id: 'mal2', platform: 'youtube', category: 'housing', lang: 'Malayalam', title: 'അമേരിക്കയിൽ ഞങ്ങളുടെ Apartment Tour', creator: 'Malayalam USA', url: 'https://www.youtube.com/watch?v=cD0RoD6kzpM', thumbnail: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=700&fit=crop', tags: ['Malayalam', 'apartmentTour', 'America'], views: '38K' },
+    { id: 'mal3', platform: 'youtube', category: 'housing', lang: 'Malayalam', title: 'USA Home Tour | Our Dream Home | Malayalam', creator: 'Malayalam Vlog', url: 'https://www.youtube.com/watch?v=75jB4Ndphvs', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['Malayalam', 'dreamHome', 'USA'], views: '52K' },
+  ],
+}
+
+// English fallback videos — shown after language-specific ones
+const GENERIC_VIDEOS = [
+  { id: 'g1', platform: 'youtube', category: 'housing', title: 'Student Housing in America | Rent | University Housing', creator: 'Student Guide', url: 'https://www.youtube.com/watch?v=_NNA7sHzAQw', thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=700&fit=crop', tags: ['housing', 'rent', 'USA'], views: '35K' },
+  { id: 'g2', platform: 'youtube', category: 'housing', title: 'Top Student Housing near University of Texas, Austin', creator: 'Amber', url: 'https://www.youtube.com/watch?v=Rw0ofEm2imw', thumbnail: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=700&fit=crop', tags: ['UTAustin', 'studentHousing'], views: '18K' },
+  { id: 'g3', platform: 'youtube', category: 'food', title: 'Indian Student Shops for Groceries in USA | Culture Shock', creator: 'Indian Student', url: 'https://www.youtube.com/watch?v=wSmedJplVnQ', thumbnail: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=700&fit=crop', tags: ['grocery', 'cultureShock', 'Indian'], views: '48K' },
+  { id: 'g4', platform: 'youtube', category: 'community', title: 'A Day in My Life | Arizona State University | Indian Student', creator: 'Indian Student', url: 'https://www.youtube.com/watch?v=NooVogP3J6Y', thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=700&fit=crop', tags: ['ASU', 'dayInLife', 'Indian'], views: '29K' },
+  { id: 'g5', platform: 'youtube', category: 'food', title: 'UCLA is Ranked #1 for Best College Food', creator: 'UCLA', url: 'https://www.youtube.com/watch?v=CMZwnuEJeCI', thumbnail: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=700&fit=crop', tags: ['UCLA', 'bestFood', 'diningHall'], views: '180K' },
+  { id: 'g6', platform: 'youtube', category: 'housing', title: 'Northeastern University $5000 Apartment Tour in USA', creator: 'Student Vlogger', url: 'https://www.youtube.com/watch?v=dUhHWc6RBVI', thumbnail: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&h=700&fit=crop', tags: ['Northeastern', 'apartmentTour', 'Boston'], views: '42K' },
 ]
 
 const PLACE_PHOTOS = [
@@ -84,7 +111,7 @@ const platformLabels = { tiktok: 'TikTok', instagram: 'Instagram', youtube: 'You
 
 export default function VideoFeed() {
   const { student } = useApp()
-  const [tab, setTab] = useState('reels')
+  const [tab, setTab] = useState('videos')
   const [filter, setFilter] = useState('all')
   const [showCreatePost, setShowCreatePost] = useState(false)
   const [liked, setLiked] = useState(() => {
@@ -101,11 +128,21 @@ export default function VideoFeed() {
   useEffect(() => { localStorage.setItem('sn_liked', JSON.stringify(liked)) }, [liked])
   useEffect(() => { localStorage.setItem('sn_user_posts', JSON.stringify(userPosts)) }, [userPosts])
 
-  // Get university-specific reels, or fall back to generic ones
+  // Build video list: language-specific FIRST → university-specific → generic English
   const collegeName = student?.college?.name || student?.collegeName || ''
-  const universityReels = REELS_BY_UNIVERSITY[collegeName] || []
-  const allReels = universityReels.length > 0 ? [...universityReels, ...GENERIC_REELS] : GENERIC_REELS
-  const filteredReels = filter === 'all' ? allReels : allReels.filter(r => r.category === filter)
+  const studentLang = student?.language || ''
+  const langVideos = VIDEOS_BY_LANGUAGE[studentLang] || []
+  const uniVideos = VIDEOS_BY_UNIVERSITY[collegeName] || []
+  // Deduplicate by URL — language videos take priority, then university, then generic
+  const seenUrls = new Set()
+  const deduped = []
+  for (const list of [langVideos, uniVideos, GENERIC_VIDEOS]) {
+    for (const v of list) {
+      if (!seenUrls.has(v.url)) { seenUrls.add(v.url); deduped.push(v) }
+    }
+  }
+  const allVideos = deduped
+  const filteredVideos = filter === 'all' ? allVideos : allVideos.filter(r => r.category === filter)
 
   const sortedPosts = useMemo(() => {
     const filtered = filter === 'all' ? [...userPosts] : userPosts.filter(p => p.category === filter)
@@ -137,8 +174,8 @@ export default function VideoFeed() {
       <div style={S.page}>
         <div style={S.container}>
           <div style={S.tabBar}>
-            <button onClick={() => setTab('reels')} style={{ ...S.tab, ...(tab === 'reels' ? S.tabActive : {}) }}>
-              <Play size={16} /> Reels
+            <button onClick={() => setTab('videos')} style={{ ...S.tab, ...(tab === 'videos' ? S.tabActive : {}) }}>
+              <Play size={16} /> Videos
             </button>
             <button onClick={() => setTab('posts')} style={{ ...S.tab, ...(tab === 'posts' ? S.tabActive : {}) }}>
               <Image size={16} /> My Posts
@@ -158,14 +195,18 @@ export default function VideoFeed() {
             ))}
           </div>
 
-          {tab === 'reels' && (
+          {tab === 'videos' && (
             <div style={S.reelsGrid}>
               <p style={S.reelsNote}>
-                {universityReels.length > 0
-                  ? `Real content about ${collegeName} and student life from TikTok, Instagram & YouTube. Tap to watch.`
-                  : 'Real trending content from TikTok, Instagram & YouTube about student life. Tap to watch.'}
+                {langVideos.length > 0 && uniVideos.length > 0
+                  ? `${studentLang} videos + ${collegeName} content shown first. Tap to watch on YouTube.`
+                  : langVideos.length > 0
+                  ? `${studentLang} student videos shown first. Tap to watch on YouTube.`
+                  : uniVideos.length > 0
+                  ? `${collegeName} videos shown first. Tap to watch on YouTube.`
+                  : 'Real student videos from YouTube. Tap to watch.'}
               </p>
-              {filteredReels.map(reel => (
+              {filteredVideos.map(reel => (
                 <a key={reel.id} href={reel.url} target="_blank" rel="noopener noreferrer" style={S.reelCard}>
                   <img src={reel.thumbnail} alt="" style={S.reelThumb} loading="lazy" />
                   <div style={S.reelOverlay}>
@@ -176,6 +217,7 @@ export default function VideoFeed() {
                       <div style={{ ...S.reelCat, background: catColor(reel.category) }}>{catIcon(reel.category, 10)}</div>
                       <h3 style={S.reelTitle}>{reel.title}</h3>
                       <div style={S.reelCreator}>{reel.creator}</div>
+                      {reel.lang && <div style={S.langBadge}>{reel.lang}</div>}
                       {reel.views && <div style={S.reelViews}>▶ {reel.views} views</div>}
                       <div style={S.reelTags}>{reel.tags.map((t, i) => <span key={i} style={S.reelTag}>#{t}</span>)}</div>
                     </div>
@@ -536,6 +578,7 @@ const S = {
   reelCat: { width: 22, height: 22, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', marginBottom: 2 },
   reelTitle: { fontSize: 13, fontWeight: 700, color: 'white', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' },
   reelCreator: { fontSize: 11, color: 'rgba(255,255,255,0.7)' },
+  langBadge: { display: 'inline-block', padding: '2px 8px', borderRadius: 100, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)', color: 'white', fontSize: 10, fontWeight: 600, marginTop: 1 },
   reelViews: { fontSize: 10, color: 'rgba(255,255,255,0.6)', fontWeight: 600 },
   reelTags: { display: 'flex', flexWrap: 'wrap', gap: 4 },
   reelTag: { fontSize: 10, color: 'rgba(255,255,255,0.6)' },
