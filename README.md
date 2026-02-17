@@ -93,6 +93,9 @@ This app can be deployed to any static hosting platform:
 - **Vercel**: Import project and it auto-detects Vite configuration
 - **GitHub Pages**: Build and deploy the `dist` folder
 
+## Deployment Link:
+-https://studentnestgenzy.netlify.app/
+
 ## Future Roadmap
 
 - Google Places API integration for real-time location data
